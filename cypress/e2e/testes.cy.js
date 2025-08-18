@@ -55,4 +55,31 @@ describe('Teste Automatizado', () => {
     cy.contains('Recorder').should('be.visible');
   });
 
+  it('Não deve permitir cadastro com dados inválidos', () => {
+
+    cy.visit('https://qa-recorder.com/auth');
+
+    cy.get('.text-blue-600').click()
+    cy.get('#fullName')
+      .type('aa1')
+      .should('have.value', 'aa1');
+
+    cy.get('#email')
+      .type('aa@q')
+      .should('have.value', 'aa@q');
+
+    cy.get('#password')
+      .type('teste1')
+      .should('have.value', 'teste1');
+
+    cy.get('#confirmPassword')
+      .type('teste1')
+      .should('have.value', 'teste1');
+
+    cy.get('.text-primary-foreground').click()
+
+    cy.contains('Conta criada com sucesso!').should('be.visible');          
+
+    cy.url().should('include', '/auth');
+  });
 });
