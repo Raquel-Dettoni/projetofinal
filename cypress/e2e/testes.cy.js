@@ -94,14 +94,11 @@ it('Deve realizar login com sucesso e validar o Portal do Usuário', () => {
   cy.contains('Verificar Status').should('be.visible');
   cy.contains('Abrir Construtor Visual').should('be.visible');
   cy.contains('Sair').should('be.visible');
+
+  cy.get('.space-y-1 > .text-muted-foreground').click()
+  cy.url().should('include', '/auth');
+  cy.contains('Entrar').should('be.visible');
+
+  cy.visit('https://qa-recorder.com/');
 });
-
-// it('Deve realizar logout com sucesso e proteger sessão', () => {
-//   cy.contains('Sair').click();
-//   cy.url().should('include', '/auth');
-//   cy.contains('Login').should('be.visible');
-
-//   cy.visit('https://qa-recorder.com/');
-//   cy.url().should('include', '/auth');
-// });
 });
