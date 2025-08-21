@@ -1,4 +1,4 @@
-describe('Teste Automatizado', () => {
+describe('Login', () => {
 
   it('Não deve realizar login com senha incorreta', () => {
     cy.visit('https://qa-recorder.com/auth');
@@ -37,24 +37,6 @@ describe('Teste Automatizado', () => {
     cy.contains('Invalid login credentials').should('be.visible');
   });
 
-  it('Deve realizar login com sucesso', () => {
-    cy.visit('https://qa-recorder.com/auth');
-    cy.url().should('include', '/auth');
-
-    cy.get('#email')
-      .type('RaquelSottoriva@gmail.com')
-      .should('have.value', 'RaquelSottoriva@gmail.com');
-
-    cy.get('#password')
-      .type('W2e3r4t5.')
-      .should('have.value', 'W2e3r4t5.');
-
-    cy.get('.text-primary-foreground').click();
-
-    cy.url().should('eq', 'https://qa-recorder.com/');
-    cy.contains('Recorder').should('be.visible');
-  });
-
   it('Não deve permitir cadastro com dados inválidos', () => {
 
     cy.visit('https://qa-recorder.com/auth');
@@ -82,4 +64,44 @@ describe('Teste Automatizado', () => {
 
     cy.url().should('include', '/auth');
   });
+
+it('Deve realizar login com sucesso e validar o Portal do Usuário', () => {
+  cy.visit('https://qa-recorder.com/auth');
+  cy.url().should('include', '/auth');
+
+  cy.get('#email')
+    .type('RaquelSottoriva@gmail.com')
+    .should('have.value', 'RaquelSottoriva@gmail.com');
+
+  cy.get('#password')
+    .type('W2e3r4t5.')
+    .should('have.value', 'W2e3r4t5.');
+
+  cy.get('.text-primary-foreground').click();
+
+  cy.url().should('eq', 'https://qa-recorder.com/');
+
+  cy.contains('Recorder').should('be.visible');
+  cy.contains('Portal do Usuário').should('be.visible');
+  cy.contains('Assinatura Premium ativa!').should('be.visible');
+  cy.contains('Raquel Sottoriva').should('be.visible');
+  cy.contains('Premium').should('be.visible');
+
+  cy.contains('Home').should('be.visible');
+  cy.contains('Construtor Visual').should('be.visible');
+  cy.contains('Documentação').should('be.visible');
+
+  cy.contains('Verificar Status').should('be.visible');
+  cy.contains('Abrir Construtor Visual').should('be.visible');
+  cy.contains('Sair').should('be.visible');
+});
+
+// it('Deve realizar logout com sucesso e proteger sessão', () => {
+//   cy.contains('Sair').click();
+//   cy.url().should('include', '/auth');
+//   cy.contains('Login').should('be.visible');
+
+//   cy.visit('https://qa-recorder.com/');
+//   cy.url().should('include', '/auth');
+// });
 });
